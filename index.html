@@ -6,23 +6,41 @@
 <button type="button" class="call-to-action">Call to action</button>
 
 <form id="form-1">
-	<fieldset>
+	<fieldset tabindex="-1" class="nofocus">
 		<legend>Test form 1</legend>
-		<label>
-			Text input
-			<input type="text">
-		</label>
+		<div class="form-control">
+			<label>
+				Text input
+				<input type="text">
+			</label>
+		</div>
+		<div class="form-control">
+			<label>
+				Drop down
+				<select>
+					<option>Red</option>
+					<option>Orange</option>
+					<option>Yellow</option>
+					<option>Green</option>
+					<option>Blue</option>
+					<option>Indigo</option>
+					<option>Violet</option>
+				</select>
+			</label>
+		</div>
 		<button type="submit">Submit</button>
 	</fieldset>
 </form>
 
 <form id="form-2">
-	<fieldset>
+	<fieldset tabindex="-1" class="nofocus">
 		<legend>Test form 2</legend>
-		<label>
-			Text input
-			<input type="text">
-		</label>
+		<div class="form-control">
+			<label>
+				Text input
+				<input type="text">
+			</label>
+		</div>
 		<button type="submit">Submit</button>
 	</fieldset>
 </form>
@@ -31,15 +49,15 @@
 * {
 	font-size: 24px;
 }
-label {
-	display: block;
-}
 fieldset {
 	margin: 50px;
 }
 body[data-has-focus] .call-to-action,
 form[data-has-focus] button:default {
 	color: red;
+}
+.nofocus {
+	outline: none;
 }
 </style>
 
