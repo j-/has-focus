@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<title>Has focus</title>
+
+<button type="button" class="call-to-action">Call to action</button>
+
+<form id="form-1">
+	<fieldset>
+		<legend>Test form 1</legend>
+		<label>
+			Text input
+			<input type="text">
+		</label>
+		<button type="submit">Submit</button>
+	</fieldset>
+</form>
+
+<form id="form-2">
+	<fieldset>
+		<legend>Test form 2</legend>
+		<label>
+			Text input
+			<input type="text">
+		</label>
+		<button type="submit">Submit</button>
+	</fieldset>
+</form>
+
+<style>
+* {
+	font-size: 24px;
+}
+label {
+	display: block;
+}
+fieldset {
+	margin: 50px;
+}
+body[data-has-focus] .call-to-action,
+form[data-has-focus] button:default {
+	color: red;
+}
+</style>
+
+<script>
+(function () {
+	function submitHandler (e) {
+		e.preventDefault();
+		const formName = e.target.id;
+		console.info(`${formName} submitted`);
+	}
+
+	document.addEventListener('DOMContentLoaded', () => {
+		const forms = document.querySelectorAll('form');
+		Array.from(forms).forEach((form) => {
+			form.addEventListener('submit', submitHandler);
+		});
+	});
+})();
+</script>
+
+<script>
+(function () {
+
+	function isForm (element) {
+		return element.nodeName.toUpperCase() === 'FORM';
+	}
+
+	function getParentForm (element) {
+		while (element !== document.body) {
+			if (isForm(element)) {
+				return element;
+			}
+			element = element.parentNode;
+		}
+		return null;
+	}
+
+	function notifyFocusIn (element) {
+		element.dataset.hasFocus = '';
+	}
+
+	function notifyFocusOut (element) {
+		delete element.dataset.hasFocus;
+	}
+
+	function focusInElement (element) {
+		const form = getParentForm(element);
+		if (form) {
+			notifyFocusIn(form);
+			notifyFocusOut(document.body);
+		}
+		else {
+			notifyFocusIn(document.body);
+		}
+	}
+
+	function focusOutElement (element) {
+		const form = getParentForm(element);
+		if (form) {
+			notifyFocusOut(form);
+			notifyFocusIn(document.body);
+		}
+		else {
+			notifyFocusOut(document.body);
+		}
+	}
+
+	window.addEventListener('focusin', (e) => focusInElement(e.target));
+	window.addEventListener('focusout', (e) => focusOutElement(e.target));
+
+	const active = document.activeElement;
+	if (active) {
+		focusInElement(active);
+	}
+
+})();
+</script>
