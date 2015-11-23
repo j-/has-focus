@@ -142,10 +142,7 @@ form[data-has-focus] button:default {
 
 	function submitForm (form) {
 		const event = new Event('submit');
-		const result = form.dispatchEvent(event);
-		if (result && event.defaultPrevented) {
-			HTMLFormElement.prototype.submit.call(form);
-		}
+		form.dispatchEvent(event);
 	}
 
 	document.addEventListener('keypress', (e) => {
